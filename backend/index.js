@@ -11,6 +11,7 @@ const authRouter = require("./routes/authRoute");
 const productRouter = require("./routes/productRoute");
 const categoryRouter = require("./routes/categoryRoute");
 const brandRouter = require("./routes/brandRoute");
+
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const cors = require("cors");
