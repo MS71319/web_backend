@@ -1,6 +1,9 @@
 const Product = require("../models/productModel");
 const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
+const validateMongodbId = require("../utils/validateMongodbid");
+const { cloudinaryUploadImg, cloudinaryDeleteImg } = require("../utils/cloudinary");
+const fs = require("fs");
 
 const createProduct = asyncHandler(async (req, res) => {
     try {
@@ -116,8 +119,42 @@ const addToWishlist = asyncHandler(async (req, res) => {
 });
 
 const uploadImages = asyncHandler(async (req, res) => {
-    console.log(req.files);
+
+    try {
+        const uploader = (path) => cloudinaryUploadImg(path, "images");
+        const urls = [];
+        const files = req.files;
+        
+        // Debugging: Log the structure of files
+        console.log(files);
+
+        for (const file of files) {
+            const { path } = file;
+            const newpath = await uploader(path);
+            console.log(newpath);
+            urls.push(newpath);
+            // fs.unlinkSync(path);
+        }
+        const images = urls.map((file) => file);
+        res.json(images);
+
+    }   catch (error) {
+        throw new Error(error);
+       
+    }
 });
 
+const deleteImages = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    try {
+      const deletedImage = await cloudinaryDeleteImg(id, "images");
+      // Respond with appropriate data after successful deletion
+      res.json({ message: "Image Deleted", deletedImage });
+    } catch (error) {
+      console.error("Error occurred during image deletion:", error.message);
+      res.status(500).json({ error: error.message || "Error occurred during image deletion" });
+    }
+  });
+  
 
-module.exports = { createProduct, getaProduct, getAllProduct, updateProduct, deleteProduct, addToWishlist, uploadImages };
+module.exports = { createProduct, getaProduct, getAllProduct, updateProduct, deleteProduct, addToWishlist, uploadImages, deleteImages };
