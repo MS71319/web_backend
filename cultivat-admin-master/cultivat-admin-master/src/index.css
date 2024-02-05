@@ -205,7 +205,3 @@ dl, ol, ul {
 label {
   text-transform: capitalize;
 }
-.error{
-  color: red;
-  font-size: 12px;
-}

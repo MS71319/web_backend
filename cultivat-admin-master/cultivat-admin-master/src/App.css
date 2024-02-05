@@ -19,12 +19,17 @@ body{
 
 .form-floating input:focus + label,
 .form-floating input:not(:placeholder-shown) + label {
-  top: 10px;
-  font-size: 12px;
+  top: 14px;
+  font-size: 13px;
   color: #6c757d;
 }
 
 /* Hide the placeholder when the input has a value */
 .form-floating input:not(:placeholder-shown) + label + span {
   display: none;
+}
+.error {
+  color: red !important; /* Adding !important to override other styles if needed */
+  font-size: 12px;
+  /* Add any additional styling if needed */
 }
