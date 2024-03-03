@@ -11,6 +11,7 @@ const authRouter = require("./routes/authRoute");
 const productRouter = require("./routes/productRoute");
 const categoryRouter = require("./routes/categoryRoute");
 const brandRouter = require("./routes/brandRoute");
+const uploadRouter = require("./routes/uploadRoute");
 
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
@@ -18,15 +19,17 @@ const cors = require("cors");
 
 dbConnect();
 app.use(morgan('dev'))
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/user", authRouter);
 app.use("/api/product", productRouter);
+app.use("/api/upload", uploadRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/brand", brandRouter);
+
 
 
 
